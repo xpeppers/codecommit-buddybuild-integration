@@ -2,7 +2,7 @@
 
 const request = require('request')
 
-module.exports.launchBuild = (event, context, callback) => {
+module.exports.launchBuild = (event, context) => {
   console.log(JSON.stringify(event))
   const APP_ID = 'APP_ID'
   const ACCESS_TOKEN = 'ACCESS_TOKEN'
