@@ -10,6 +10,7 @@ module.exports.launchBuild = (event, context) => {
   request({
     headers: {'Authorization': `Bearer ${ACCESS_TOKEN}`},
     uri: `https://api.buddybuild.com/v1/apps/${APP_ID}/build`,
+    data: {branch: 'master'},
     method: 'POST'
   }, function (err, res, body) {
     if (err) {
