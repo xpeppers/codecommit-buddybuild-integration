@@ -1,0 +1,26 @@
+{
+  "Records": [
+    {
+      "awsRegion": "eu-west-1",
+      "codecommit": {
+        "references": [
+          {
+            "commit": "00000000-0000-0000-0000-000000000000",
+            "ref": "refs/heads/master"
+          }
+        ]
+      },
+      "eventId": "00000000-0000-0000-0000-000000000000",
+      "eventName": "ReferenceChanges",
+      "eventPartNumber": 1,
+      "eventSource": "aws:codecommit",
+      "eventSourceARN": "arn:aws:codecommit:eu-west-1:000000000000:buddybuild-test-repository",
+      "eventTime": "2017-09-04T15:14:50.651+0000",
+      "eventTotalParts": 1,
+      "eventTriggerConfigId": "00000000-0000-0000-0000-000000000000",
+      "eventTriggerName": "launchBuild",
+      "eventVersion": "1.0",
+      "userIdentityARN": "arn:aws:iam::000000000000:user/BuddyBuildIntegration"
+    }
+  ]
+}
