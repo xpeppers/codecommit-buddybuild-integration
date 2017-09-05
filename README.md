@@ -1,74 +1,73 @@
----
-We assume that you already have a CodeCommit repository populated with a mobile application.
-REQUIRED: docker, docker-compose
----
+# CodeCommit - BuddyBuild Integration
+This is an AWS Lambda that allow to integrate CodeCommit Repository to BuddyBuild CI
 
-[1] create a new project from ssh repository on BuddyBuild insert something like this
-`123` only to get the generated ssh key
+## Requirements
 
-copy ssh public key from BuddyBuild.
+- docker, docker-compose
+- BuddyBuild account
+- AWS account
+- CodeCommit repository
 
+## Setup
 
-Create IAM user with CodeCommit ReadOnly Access, call it something like `BuddyBuild`
+### Configure CodeCommit Repository on BuddyBuild
 
-Go to `Security credentials` of the created `BuddyBuild` user
+1. **On BuddyBuild page:** Create a new project from ssh repository by clicking `Add it with SSH!` action
+2. **On BuddyBuild page:** Insert CodeCommit ssh repo in the `git clone URL` like this:
+   ```
+   ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/test-codecommit-repository
+   ```
+3. **On BuddyBuild page:** Copy ssh public key provided by BuddyBuild.
+4. **On AWS page:** Create IAM user with CodeCommit ReadOnly Access, you can call it something like `BuddyBuildIntegration`
+5. **On AWS page:** Go to `Security credentials` of the created `BuddyBuildIntegration` user
+6. **On AWS page:** Click on `upload SSH public key` and insert ssh public key copied from the BuddyBuild page (on point [**3.**])
+7. **On AWS page:** Copy the generated `SSH key ID`
+8. **On BuddyBuild page:** Append just after `ssh://` the copied `SSH key ID` in this way:
+   ```
+   ssh://[SSH_KEY_ID]@git-codecommit.eu-west-1.amazonaws.com/v1/repos/test-codecommit-repository
+   ```
+9. **On BuddyBuild page:** Click start build app on BuddyBuild
 
-and upload a new SSH key (bring it from BuddyBuild App Configuration Screen)
+### Get BuddyBuild tokens:
 
-copy SSH_KEY_ID and insert it into ssh path of BuddyBuild (into this section: [1])
-`git clone ssh://[SSH_KEY_ID]@git-codecommit.eu-west-1.amazonaws.com/v1/repos/test-codecommit-repository`
+- Go to `myProfile -> access_token`
+- copy the access_token
+- copy the app id from url:
+  ```
+  https://dashboard.buddybuild.com/apps/[APP-ID-YOU-HAVE-TO-COPY]?page=1
+  ```
 
-Click start build app on BuddyBuild
+### Setup Project
 
----
-add trigger to the lambda (http://docs.aws.amazon.com/codecommit/latest/userguide/how-to-notify-lambda-cc.html)
+Copy `.env.template` to `.env` file and fill the fields with your AWS Credentials and BuddyBuild tokens
 
-configure variables of this repo with
+Create and start local environment
 ```
-AWS_ACCESS_KEY=[AWS_ACCESS_KEY_FOR_DEPLOY_LAMBDA]
-AWS_SECRET_KEY_ID=[AWS_ACCESS_SECRET_FOR_DEPLOY_LAMBDA]
-access_token=[BUDDYBUILD_ACCESS_TOKEN]
-app_id=[BUDDYBUILD_APP_ID]
+$ docker-compose up -d
 ```
 
-deploy Lambda
-
-try to push a commit to the target CodeCommit, the build will be visible after build process terminated
+Deploy the configured Lambda on your AWS account
+```
+$ docker-compose exec codecommit-buddybuild serverless deploy --stage test
 ```
 
+### Configure Trigger from CodeCommit to the new Lambda
 
+- Go to `Services -> Lambda`
+- Select `codecommit-buddybuild-integration` Lambda
+- Go to `triggers` tabs
+- Click `Add trigger`
+- Select `CodeCommit` trigger
+- Choose:
+   - Repository Name
+   - Trigger name
+   - event that triggers the lambda
+   - which branch trigger the lambda
 
----
+### Try the integration and see the Logs
+Now you can try to push a commit to the target CodeCommit repository and see the logs with this command:
+```
+docker-compose exec codecommit-buddybuild serverless logs -f launchBuild -s test --startTime 1m -t
+```
 
-Go to myProfile -> access_token
-copy the access_token
-copy the app id from url
-
-This is the curl to call in post for trigger a new build with last commit
-`curl -X POST -H 'Authorization: Bearer [ACCESS_TOKEN]' 'https://api.buddybuild.com/v1/apps/[APP_ID]/build'`
-It Returns `{"build_id":"123456789101112"}`
-
-
-Change parameters
-sls deploy --stage [STAGE]
-
-
-Setup CodeCommit hook to invoke the Lambda (!!!From Lambda Console!!!)
-
-----
-
-Copy .env.template to .env file and fill the fields
-
-docker-compose up -d
-docker-compose exec codecommit-buddybuild serverless deploy --stage test
-
-
-
-
-
-
-
-
-
-
-
+The build on BuddyBuild will be visible after build process terminated.
