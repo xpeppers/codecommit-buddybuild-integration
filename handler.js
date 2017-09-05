@@ -3,8 +3,6 @@
 const request = require('request')
 
 module.exports.launchBuild = (event, context) => {
-  console.log(JSON.stringify(event))
-
   request({
     headers: {'Authorization': `Bearer ${process.env.ACCESS_TOKEN}`},
     uri: `https://api.buddybuild.com/v1/apps/${process.env.APP_ID}/build`,
@@ -15,6 +13,7 @@ module.exports.launchBuild = (event, context) => {
       console.log('response_error: ', err)
       context.fail(err)
     }
+    console.log(body)
     context.succeed(body)
   })
 }

@@ -1,5 +1,6 @@
 ---
 We assume that you already have a CodeCommit repository populated with a mobile application.
+REQUIRED: docker, docker-compose
 ---
 
 [1] create a new project from ssh repository on BuddyBuild insert something like this

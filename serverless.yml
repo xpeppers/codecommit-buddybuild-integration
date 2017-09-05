@@ -9,6 +9,7 @@ provider:
   name: aws
   region: ${env:AWS_REGION}
   runtime: nodejs6.10
+  environment: ${self:custom.env}
 
 functions:
   launchBuild:
