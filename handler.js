@@ -4,20 +4,17 @@ const request = require('request')
 
 module.exports.launchBuild = (event, context) => {
   console.log(JSON.stringify(event))
-  const APP_ID = 'APP_ID'
-  const ACCESS_TOKEN = 'ACCESS_TOKEN'
 
   request({
-    headers: {'Authorization': `Bearer ${ACCESS_TOKEN}`},
-    uri: `https://api.buddybuild.com/v1/apps/${APP_ID}/build`,
+    headers: {'Authorization': `Bearer ${process.env.ACCESS_TOKEN}`},
+    uri: `https://api.buddybuild.com/v1/apps/${process.env.APP_ID}/build`,
     data: {branch: 'master'},
     method: 'POST'
   }, function (err, res, body) {
     if (err) {
       console.log('response_error: ', err)
+      context.fail(err)
     }
-    console.log('response: ', JSON.stringify(res))
-    console.log('response_body: ', body)
-    context.succeed()
+    context.succeed(body)
   })
 }

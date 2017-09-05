@@ -53,3 +53,21 @@ sls deploy --stage [STAGE]
 
 
 Setup CodeCommit hook to invoke the Lambda (!!!From Lambda Console!!!)
+
+----
+
+Copy .env.template to .env file and fill the fields
+
+docker-compose up -d
+docker-compose exec codecommit-buddybuild serverless deploy --stage test
+
+
+
+
+
+
+
+
+
+
+

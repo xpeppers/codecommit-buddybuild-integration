@@ -1,8 +1,13 @@
 service: codecommit-buddybuild-integration
 
+custom:
+  env:
+    APP_ID: ${env:APP_ID}
+    ACCESS_TOKEN: ${env:ACCESS_TOKEN}
+
 provider:
   name: aws
-  region: eu-west-1
+  region: ${env:AWS_REGION}
   runtime: nodejs6.10
 
 functions:

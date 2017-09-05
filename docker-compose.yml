@@ -1,0 +1,11 @@
+version: '3'
+services:
+  codecommit-buddybuild:
+    env_file:
+      - .env
+    build:
+      context: .
+    entrypoint: /bin/bash
+    volumes:
+      - '.:/home/ec2user'
+    tty: true
