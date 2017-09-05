@@ -8,9 +8,8 @@ This is an AWS Lambda that allow to integrate CodeCommit Repository to BuddyBuil
 - AWS account
 - CodeCommit repository
 
-## Setup
 
-### Configure CodeCommit Repository on BuddyBuild
+## Configure CodeCommit Repository on BuddyBuild
 
 1. **On BuddyBuild page:** Create a new project from ssh repository by clicking `Add it with SSH!` action
 2. **On BuddyBuild page:** Insert CodeCommit ssh repo in the `git clone URL` like this:
@@ -37,7 +36,7 @@ This is an AWS Lambda that allow to integrate CodeCommit Repository to BuddyBuil
   https://dashboard.buddybuild.com/apps/[APP-ID-YOU-HAVE-TO-COPY]?page=1
   ```
 
-### Setup Project
+## Setup Integration
 
 Copy `.env.template` to `.env` file and fill the fields with your AWS Credentials and BuddyBuild tokens
 
