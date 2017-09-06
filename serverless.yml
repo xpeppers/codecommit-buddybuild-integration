@@ -1,4 +1,4 @@
-service: codecommit-buddybuild-integration
+service: ${env:SERVICE_NAME}
 
 custom:
   env:
