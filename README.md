@@ -17,7 +17,7 @@ This is an AWS Lambda that allow to integrate CodeCommit Repository to BuddyBuil
    ssh://git-codecommit.eu-west-1.amazonaws.com/v1/repos/test-codecommit-repository
    ```
 3. **On BuddyBuild page:** Copy ssh public key provided by BuddyBuild.
-4. **On AWS page:** Create IAM user with CodeCommit ReadOnly Access, you can call it something like `BuddyBuildIntegration`
+4. **On AWS page:** Create IAM user Only to permit BuddyBuild to read the Repository. You have to give CodeCommit ReadOnly Access to the user. You can call it something like `BuddyBuildIntegration`
 5. **On AWS page:** Go to `Security credentials` of the created `BuddyBuildIntegration` user
 6. **On AWS page:** Click on `upload SSH public key` and insert ssh public key copied from the BuddyBuild page (on point [**3.**])
 7. **On AWS page:** Copy the generated `SSH key ID`
@@ -36,9 +36,14 @@ This is an AWS Lambda that allow to integrate CodeCommit Repository to BuddyBuil
   https://dashboard.buddybuild.com/apps/[APP-ID-YOU-HAVE-TO-COPY]?page=1
   ```
 
+### Set up the AWS Credentials to deploy Lambda
+You need an account with Administration Access and use its AWS credentials to deploy the Lambda.
+
+See [Servelress Framework Guide](https://serverless.com/framework/docs/providers/aws/guide/credentials/#creating-aws-access-keys)
+
 ## Setup Integration
 
-Copy `.env.template` to `.env` file and fill the fields with your AWS Credentials and BuddyBuild tokens
+Copy `.env.template` to `.env` file and fill the fields with your AWS Admin Credentials and BuddyBuild tokens
 
 Create and start local environment
 ```
