@@ -4,7 +4,7 @@
   "description": "This is an AWS Lambda that allow to integrate CodeCommit Repository to BuddyBuild CI",
   "main": "handler.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "m.test"
   },
   "keywords": [],
   "author": "",
@@ -12,7 +12,9 @@
   "dependencies": {
     "request": "^2.81.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "m.test": "0.0.57"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/xpeppers/codecommit-buddybuild-integration.git"
@@ -20,5 +22,10 @@
   "bugs": {
     "url": "https://github.com/xpeppers/codecommit-buddybuild-integration/issues"
   },
-  "homepage": "https://github.com/xpeppers/codecommit-buddybuild-integration#readme"
+  "homepage": "https://github.com/xpeppers/codecommit-buddybuild-integration#readme",
+  "standard": {
+    "globals": [
+      "test"
+    ]
+  }
 }
