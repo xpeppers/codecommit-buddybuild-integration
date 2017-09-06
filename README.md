@@ -45,15 +45,19 @@ See [Servelress Framework Guide](https://serverless.com/framework/docs/providers
 
 Copy `.env.template` to `.env` file and fill the fields with your AWS Admin Credentials and BuddyBuild tokens
 
-Create and start local environment
-```
-$ docker-compose up -d
-```
 
-Deploy the configured Lambda on your AWS account
-```
-$ docker-compose exec codecommit-buddybuild serverless deploy --stage test
-```
+1. Create and start local environment
+   ```
+   $ docker-compose up -d
+   ```
+2. Install dependencies
+   ```
+   $ docker-compose exec codecommit-buddybuild npm install
+   ```
+3. Deploy the configured Lambda on your AWS account
+   ```
+   $ docker-compose exec codecommit-buddybuild serverless deploy --stage test
+   ```
 
 ### Configure Trigger from CodeCommit to the new Lambda
 
