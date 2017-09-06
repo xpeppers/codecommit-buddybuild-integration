@@ -53,9 +53,9 @@ Copy `.env.template` to `.env` file and fill the fields with your AWS Admin Cred
    ```
    $ docker-compose exec codecommit-buddybuild npm install
    ```
-3. Deploy the configured Lambda on your AWS account
+3. Deploy the configured Lambda on your AWS account for a specific stage (in this example is `prod`)
    ```
-   $ docker-compose exec codecommit-buddybuild serverless deploy --stage test
+   $ docker-compose exec codecommit-buddybuild serverless deploy --stage prod
    ```
 
 **NB:** On each `.env` change, you have to reboot the container with:
@@ -79,7 +79,5 @@ $ docker-compose up -d
 ### Try the integration and see the Logs
 Now you can try to push a commit to the target CodeCommit repository and see the logs with this command:
 ```
-docker-compose exec codecommit-buddybuild serverless logs -f launchBuild -s test --startTime 1m -t
+docker-compose exec codecommit-buddybuild serverless logs --function launchBuild --stage prod --startTime 1m -t
 ```
-
-The build on BuddyBuild will be visible after build process terminated.
