@@ -1,13 +1,12 @@
 'use strict'
 
 const CodeCommitEvent = require('./lib/codecommit-event')
-const BuddyBuild = require('./lib/buddybuild')
+const BuildService = require('./lib/build-service')
 
 module.exports.launchBuild = (event, context) => {
-  var branches = new CodeCommitEvent(event).branches()
-  var buddyBuild = new BuddyBuild()
+  var codeCommitEvent = new CodeCommitEvent(event)
 
-  return Promise.all(branches.map((branch) => buddyBuild.triggerFor(branch)))
+  return new BuildService().startBuildsFrom(codeCommitEvent)
   .then(context.succeed)
   .catch(context.fail)
 }
