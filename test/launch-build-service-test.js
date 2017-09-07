@@ -16,7 +16,7 @@ test('test BuildService send a build HTTP request', function () {
 
 function fakeCodeCommitEvent (branches) {
   return {
-    branches: function () {
+    getBranches: function () {
       return branches
     }
   }
